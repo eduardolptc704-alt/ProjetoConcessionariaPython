@@ -6,11 +6,13 @@ from Servicos.estoque_inicial import carregar_estoque
 from Servicos.login import realizar_login
 from Servicos.salvar_agendamento import registrar_e_exibir_agendamento
 
-# Inicializa a concessionária e carrega os carros do CSV
+
 def main():
+    # Inicializa a concessionária e carrega os carros do CSV
     minha_concessionaria = Concessionaria()
     carregar_estoque(minha_concessionaria)
 
+    print("--- Bem-vindo à Concessionária Digital ---")
 
     # Verificação de Usuário Existente
     cliente = None
@@ -22,10 +24,6 @@ def main():
             cliente = realizar_login()  # Tenta fazer o login
             if cliente:
                 print(f"Bem-vindo de volta, {cliente.nome}!")
-                print(f"\n--- Modelos disponíveis no pátio ---")
-                for carro in minha_concessionaria.estoque:
-                    print(f"• {carro.marca} {carro.modelo} | Ano: {carro.ano}")
-                print("-" * 50)
 
         elif ja_e_cliente == 'N':
             cliente = cadastrar_cliente()  # Faz um novo cadastro
@@ -39,6 +37,12 @@ def main():
             print("\n--- Cadastro concluído com sucesso e salvo no sistema! ---")
         else:
             print("Opção inválida. Digite S para Sim ou N para Não.")
+
+    # Exibição do estoque movida para fora do loop para aparecer em ambos os casos (Login ou Cadastro)
+    print(f"\n--- Modelos disponíveis no pátio ---")
+    for carro in minha_concessionaria.estoque:
+        print(f"• {carro.marca} {carro.modelo} | Ano: {carro.ano}")
+    print("-" * 50)
 
     while True:
         try:
@@ -88,6 +92,7 @@ def main():
     registrar_e_exibir_agendamento(novo_agendamento)
 
     print("Agradecemos pela preferência!")
+
 
 if __name__ == "__main__":
     main()
